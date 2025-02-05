@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import Link from "next/link";
 
 interface WebProps {
