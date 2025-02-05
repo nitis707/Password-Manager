@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 interface WebProps {
   url: string;
@@ -24,7 +25,7 @@ export function YourPassword({ passwords }: { passwords: WebProps[] }) {
       <CardHeader>
         <CardTitle>Your Passwords</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="h-48 overflow-y-auto">
         {passwords.length === 0 ? (
           <p className="text-center text-gray-400 dark:text-foreground">
             No passwords added!
@@ -37,7 +38,18 @@ export function YourPassword({ passwords }: { passwords: WebProps[] }) {
                 className="flex flex-col md:flex-row md:justify-between bg-secondary p-2 rounded"
               >
                 <div>
-                  <p>{password.url}</p>
+                  <Link
+                    href={
+                      password.url.startsWith("http")
+                        ? password.url
+                        : `https://${password.url}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {password.url}
+                  </Link>
+                  {/* <p>{password.url}</p> */}
                   <p className="mb-1 text-xs">{password.username}</p>
                 </div>
                 <div className="flex items-center space-x-2">

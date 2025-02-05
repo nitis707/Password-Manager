@@ -12,7 +12,7 @@ export async function YourCard({ cards }: { cards: CardProps[] }) {
       <CardHeader>
         <CardTitle>Your Cards</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="h-48 overflow-y-auto">
         {cards.length === 0 ? (
           <p className="text-center text-gray-400 dark:text-foreground">
             No cards added!

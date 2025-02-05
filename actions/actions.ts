@@ -1,6 +1,5 @@
 "use server";
 
-import { NextRequest, NextResponse } from "next/server";
 import { clerkClient } from "@clerk/nextjs/server";
 
 interface Card {
@@ -28,15 +27,21 @@ export async function addCardServer(
   if (Array.isArray(user.privateMetadata.cards)) {
     cards = user.privateMetadata.cards || [];
     cards.push({ cardNo, expiry, cvv });
+
+    await client.users.updateUserMetadata(userId, {
+      privateMetadata: {
+        cards: cards,
+      },
+    });
+  } else {
+    await client.users.updateUserMetadata(userId, {
+      privateMetadata: {
+        cards: [{ cardNo, expiry, cvv }],
+      },
+    });
   }
 
-  await client.users.updateUserMetadata(userId, {
-    privateMetadata: {
-      cards: cards,
-    },
-  });
-
-  return NextResponse.json({ success: true });
+  return { success: true };
 }
 
 export async function addWebServer(
@@ -52,13 +57,19 @@ export async function addWebServer(
   if (Array.isArray(user.privateMetadata.passwords)) {
     passwords = user.privateMetadata.passwords || [];
     passwords.push({ url, username, password });
+
+    await client.users.updateUserMetadata(userId, {
+      privateMetadata: {
+        passwords: passwords, // Ensure plain object
+      },
+    });
+  } else {
+    await client.users.updateUserMetadata(userId, {
+      privateMetadata: {
+        passwords: [{ url, username, password }], // Ensure plain object
+      },
+    });
   }
 
-  await client.users.updateUserMetadata(userId, {
-    privateMetadata: {
-      passwords: passwords,
-    },
-  });
-
-  return NextResponse.json({ success: true });
+  return { success: true };
 }

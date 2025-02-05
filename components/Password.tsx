@@ -30,8 +30,8 @@ export function Password() {
   const formSchema = z.object({
     url: z
       .string()
-      .min(1, {
-        message: "Url must be at least 1 character",
+      .min(3, {
+        message: "Url must be at least 3 character",
       })
       .max(50, {
         message: "Url must be at least 50 character",
@@ -44,16 +44,16 @@ export function Password() {
       ),
     username: z
       .string()
-      .min(1, {
-        message: "Username must be at least 1 character",
+      .min(3, {
+        message: "Username must be at least 3 character",
       })
       .max(50, {
         message: "Username cannot exceed 50 digit",
       }),
     password: z
       .string()
-      .min(1, {
-        message: "Password must be at least 1 character",
+      .min(3, {
+        message: "Password must be at least 3 character",
       })
       .max(50, {
         message: "Password cannot exceed 50 character",
@@ -71,13 +71,13 @@ export function Password() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
+    // console.log(values);
 
     if (user.user) {
-      addWebServer(
+      await addWebServer(
         values.url,
         values.username,
         values.password,
